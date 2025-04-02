@@ -9,33 +9,41 @@ const Navbar = () => {
   const buttonRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline();
-    tl.from(logoRef.current, {
-      opacity: 0,
-      y: -60,
-      ease: "Power2.out",
-    });
+    // Set initial states
+    gsap.set(logoRef.current, { opacity: 0, y: -60 });
+    gsap.set(menuItemsRef.current, { opacity: 0, y: -40 });
+    gsap.set(buttonRef.current, { opacity: 0, y: -60 });
 
-    tl.from(menuItemsRef.current, {
-      opacity: 0,
-      y: -40,
-      duration: 0.5,
+    // Increased delay from 1.5s to 2.5s before navbar animation starts
+    const tl = gsap.timeline({ delay: 2.5 });
+    
+    tl.to(logoRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "power2.out"
+    })
+    .to(menuItemsRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
       stagger: 0.2,
-      ease: "Power2.out",
-    });
+      ease: "power2.out"
+    }, "-=0.8")
+    .to(buttonRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.6");
 
-    tl.from(buttonRef.current, {
-      opacity: 0,
-      y: -60,
-      ease: "Power2.out",
-    });
   }, []);
 
   return (
     <div className="fixed top-0 left-0  w-full z-50   flex justify-between px-40 items-center py-6">
       {/* logo */}
       <div>
-        <img ref={logoRef} className="w-40" src={logo} alt="logo" />
+        <img ref={logoRef} className="w-20" src={logo} alt="logo" style={{ transformOrigin: 'center center' }} />
       </div>
       {/* nav-menu */}
       <div className="flex text-2xl font-semibold nav-item   gap-10">

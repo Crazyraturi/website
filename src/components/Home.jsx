@@ -1,10 +1,57 @@
-import React from "react";
+import React, { useEffect, useRef } from 'react';
 import video from "../assets/videos/video.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
+import { gsap } from 'gsap';
 
 const Home = () => {
+  const headingRef1 = useRef(null);
+  const headingRef2 = useRef(null);
+  const headingRef3 = useRef(null);
+  const bookingSectionRef = useRef(null);
+
+  useEffect(() => {
+    // Set initial states
+    gsap.set([headingRef1.current, headingRef2.current, headingRef3.current], {
+      opacity: 0,
+      x: -100
+    });
+    gsap.set(bookingSectionRef.current, {
+      opacity: 0,
+      y: 100
+    });
+
+    // Increased delay to 4.5s to start after navbar finishes
+    const tl = gsap.timeline({ delay: 4.5 });
+
+    tl.to(headingRef1.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1.2,
+      ease: "power3.out"
+    })
+    .to(headingRef2.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1.2,
+      ease: "power3.out"
+    }, "-=0.8")
+    .to(headingRef3.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1.2,
+      ease: "power3.out"
+    }, "-=0.8")
+    .to(bookingSectionRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1.4,
+      ease: "power2.out"
+    }, "-=0.6");
+
+  }, []);
+
   return (
     <div className="h-screen w-full relative">
       <video
@@ -18,26 +65,19 @@ const Home = () => {
       {/* Light Black Overlay */}
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
-      {/* Butterfly Image Animation */}
-      <img
-        src="https://www.animatedimages.org/data/media/291/animated-butterfly-image-0079.gif"
-        alt="Butterfly"
-        className="absolute bottom-2  z-50 left-2 w-24 h-auto animate-moveButterfly"
-      />
-
       <div className="absolute inset-0 flex flex-col uppercase justify-center z-10">
-        <h3 className="pl-[25%] hero-heading tracking-wide text-xl text-white">
+        <h3 ref={headingRef1} className="pl-[25%] hero-heading tracking-wide text-xl text-white">
           Welcome to River Ranch
         </h3>
-        <h1 className="pl-[25%] hero-heading text-8xl text-white">
+        <h1 ref={headingRef2} className="pl-[25%] hero-heading text-8xl text-white">
           Treasure
         </h1>
-        <h1 className="pl-[50%] hero-heading text-8xl text-white">
+        <h1 ref={headingRef3} className="pl-[50%] hero-heading text-8xl text-white">
           your holiday
         </h1>
       </div>
 
-      <div className="absolute inset-0 flex items-end justify-center gap-x-16 text-white pb-20 z-10">
+      <div ref={bookingSectionRef} className="absolute inset-0 flex items-end justify-center gap-x-16 text-white pb-20 z-10">
         <div>
           <div className="flex gap-2 items-center">
             <RiCalendarCheckLine />
@@ -72,44 +112,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-
-      {/* Inline styles for animation */}
-      <style>
-        {`
-          @keyframes moveButterfly {
-            0% {
-              bottom: 2rem;
-              left: 2rem;
-              opacity: 0; /* Start invisible */
-              transform: scale(0.5); /* Start smaller */
-            }
-            10% {
-              opacity: 1; /* Become visible */
-              transform: scale(1.2); /* Pop-up effect */
-            }
-            20% {
-              transform: scale(1); /* Return to normal size */
-            }
-            95% {
-              bottom: 95%;
-              left: 95%;
-              opacity: 1;
-              transform: scale(1);
-            }
-            100% {
-              bottom: 95%;
-              left: 95%;
-              opacity: 0;
-              transform: scale(0.5);
-            }
-          }
-          
-          .animate-moveButterfly {
-            animation: moveButterfly 15s ease-in-out forwards;
-            animation-iteration-count: 1;
-          }
-        `}
-      </style>
     </div>
   );
 };
