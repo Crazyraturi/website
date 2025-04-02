@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import gsap from "gsap";
-import logo from "../assets/logo2.png";
+import logo from "../assets/images/logo.png";
 
 const Navbar = () => {
   const logoRef = useRef(null);

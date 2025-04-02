@@ -1,23 +1,59 @@
-import React from 'react';
-import { useNavigate } from 'react-router'; // Use useNavigate instead of useHistory
-import frameImage from '../assets/frame.png'; // Adjust the path as necessary
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import frameImage from '../assets/images/frame.png';
+import backgroundVideo from '../assets/videos/bg.mp4';
 
 const Overlay = ({ onClick }) => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleClick = () => {
-    onClick(); // Call the onClick prop to hide the overlay
-    navigate('/home'); // Redirect to the home screen
+    onClick();
+    setIsAnimating(true); // Start animation
+  };
+
+  const handleTransitionEnd = () => {
+    if (isAnimating) {
+      setTimeout(() => {
+        navigate('/home'); // Redirect only after animation completes
+      }, 500);
+    }
   };
 
   return (
-    <div className="overlay">
-      <img src={frameImage} alt="Frame" className="frame-image" />
-      <button className="dive-in-button" onClick={handleClick}>
-        Dive In
-      </button>
+    <div className="overlay flex items-center justify-center h-screen bg-black relative overflow-hidden">
+      {/* ✅ Video auto-plays immediately */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src={backgroundVideo}
+        muted
+        loop
+        autoPlay
+      />
+
+      <div className="relative flex items-center justify-center">
+        {/* ✅ Frame enlarges and moves out */}
+        <img
+          src={frameImage}
+          alt="Frame"
+          className={`frame-image w-[50%] transition-all duration-1000 ease-out ${
+            isAnimating ? 'scale-150 translate-x-[100vw] opacity-0' : ''
+          }`}
+          onTransitionEnd={handleTransitionEnd}
+        />
+
+        {/* ✅ Button to trigger animation */}
+        {!isAnimating && (
+          <button
+            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#988579] text-white px-6 py-3 rounded-lg border-2 border-white"
+            onClick={handleClick}
+          >
+            Explore
+          </button>
+        )}
+      </div>
     </div>
   );
 };
 
-export default Overlay; 
+export default Overlay;

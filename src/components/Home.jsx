@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../assets/video.mp4";
+import video from "../assets/videos/video.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
