@@ -30,5 +30,25 @@
     cursor: pointer;
   }
 
+.custom-frame {
+  max-width: 80%;
+  max-height: 80%;
+  transition: all 3s ease-in-out !important;
+}
+
+.animated-frame {
+  animation: frame-zoom-out 3s forwards;
+}
+
+@keyframes frame-zoom-out {
+  0% {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5) translateX(50%);
+    opacity: 0.7;
+  }
+}
 
  
