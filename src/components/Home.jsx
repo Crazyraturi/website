@@ -58,6 +58,7 @@ const Home = () => {
         autoPlay
         playsInline
         src={videoSrc}
+        preload="none"
       ></video>
 
       {/* Light Black Overlay */}
