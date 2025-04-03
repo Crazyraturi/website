@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import frameImage from "../assets/images/frame.png";
-import logo from"../assets/images/logo.png";
+import logo from "../assets/images/logo.png";
 import backgroundVideo from "../assets/videos/bg.mp4";
 import { gsap } from "gsap";
 
@@ -10,12 +10,16 @@ const Overlay = ({ onClick }) => {
   const frameRef = useRef(null);
   const videoRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const video = videoRef.current;
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.pause();
     }
   }, []);
+
+
+
 
   const handleClick = () => {
     if (isAnimating) return;
@@ -28,10 +32,10 @@ const Overlay = ({ onClick }) => {
 
     // Single animation with continuous scaling and fading
     gsap.to(frameRef.current, {
-      duration: 2, 
+      duration: 2,
       scale: 5,
       opacity: 0,
-      ease: "power2.inOut", 
+      ease: "power2.inOut",
       onComplete: () => {
         if (onClick) onClick();
         navigate("/home");
@@ -47,14 +51,11 @@ const Overlay = ({ onClick }) => {
         src={backgroundVideo}
         muted
         playsInline
-        
       />
 
-     <div className=" z-20 fame-heading absolute flex items-center justify-center pt-7 gap-7 top-0">
-      <img  className="w-[30%] " src={logo} alt="logo" />
-  
-     </div>
-
+      <div className=" z-20 fame-heading absolute flex items-center justify-center pt-7 gap-7 top-0">
+        <img className="w-[30%] " src={logo} alt="logo" />
+      </div>
 
       <div className=" frameImg relative flex items-center justify-center">
         <img

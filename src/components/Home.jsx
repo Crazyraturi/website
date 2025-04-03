@@ -73,6 +73,9 @@ const Home = () => {
         preload='none'
       ></video>
 
+
+      <img className='absolute size-40 flex ' src="https://i.gifer.com/2vDc.gif" alt="" />
+
       {/* Light Black Overlay */}
       <div className="absolute inset-0 bg-black/20 z-0"></div>
 
