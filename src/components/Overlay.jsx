@@ -47,7 +47,7 @@ const Overlay = ({ onClick }) => {
         src={backgroundVideo}
         muted
         playsInline
-        // poster="https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        
       />
 
      <div className=" z-20 fame-heading absolute flex items-center justify-center pt-7 gap-7 top-0">
@@ -62,7 +62,7 @@ const Overlay = ({ onClick }) => {
           src={frameImage}
           alt="Frame"
           style={{
-            width: "50%",
+            width: "40%",
             display: "block",
             margin: "0 auto",
             position: "relative",
@@ -74,7 +74,7 @@ const Overlay = ({ onClick }) => {
 
         {!isAnimating && (
           <button
-            className="absolute left-1/2 top-1/2 transform uppercase  -translate-x-1/2 -translate-y-1/2 bg-[#988579] text-white px-6 py-3 rounded-lg border-2 border-white hover:bg-[#7a6b61] z-20"
+            className="absolute left-1/2 top-1/2 transform uppercase  -translate-x-1/2 -translate-y-1/2 bg-[#988579] text-white px-3 py-2 rounded-lg border-2 border-white hover:bg-[#7a6b61] z-20"
             onClick={handleClick}
             style={{
               cursor: "pointer",
