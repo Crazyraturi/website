@@ -33,7 +33,16 @@ const Home = () => {
       y: 100,
     });
 
-    const tl = gsap.timeline({ delay: 4.5 });
+    // Explicitly set the bird's initial position
+    if (birdRef.current) {
+      gsap.set(birdRef.current, {
+        x: "110vw",
+        opacity: 0,
+        display: 'block'
+      });
+    }
+
+    const tl = gsap.timeline({ delay: 0.5 });
 
     // First fade in the container
     tl.to(headingsContainerRef.current, {
@@ -88,34 +97,47 @@ const Home = () => {
       "-=0.4"
     );
 
-    tl.fromTo(
-      birdRef.current,
-      { x: "110vw" },
-      { x: "-100vw", duration: 50, ease: "power2.out" }
-    );
+    // Create a separate timeline for the bird animation
+    const birdTl = gsap.timeline({ delay: 2 });
+    
+    if (birdRef.current) {
+      birdTl.to(birdRef.current, {
+        opacity: 1,
+        duration: 0.5
+      }).to(birdRef.current, {
+        x: "-100vw",
+        duration: 40,
+        ease: "none",
+      });
+    }
+    
+    // Cleanup
+    return () => {
+      tl.kill();
+      birdTl.kill();
+    };
   }, []);
 
   return (
     <div className="h-screen w-full relative">
-      {/* <video
-        className=" video absolute w-full h-full object-cover"
-        muted
-        loop
-        autoPlay
-        playsinline
-        src={video}
-        preload="none"
-      ></video> */}
       <div className="h-20 z-10 absolute w-full bg-gradient-to-b from-[#1F7580] to-transparent top-0 left-0"></div>
+      
+      {/* Background image */}
       <img
-        className=" absolute w-full h-full object-cover"
+        className="absolute w-full h-full object-cover"
         src={bgimg}
         alt="bgImage"
       />
 
+      {/* Bird image - fixed display issues */}
       <img
         ref={birdRef}
-        className="absolute size-20 sm:size-24 md:size-32 lg:size-40 hidden sm:flex"
+        className="absolute size-20 sm:size-24 md:size-32 lg:size-40 sm:block hidden"
+        style={{ 
+          top: '15%',
+          opacity: 0,
+          visibility: 'visible'
+        }}
         src="https://i.gifer.com/2vDc.gif"
         alt="flying birds"
       />

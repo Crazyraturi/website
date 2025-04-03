@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import gsap from "gsap";
+import { gsap } from "gsap";
 import logo from "../assets/images/logo.png";
 
 const Navbar = () => {
   const logoRef = useRef(null);
   const menuItemsRef = useRef([]);
   const buttonRef = useRef(null);
-  const mobileMenuRef = useRef(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const Navbar = () => {
     gsap.set(menuItemsRef.current, { opacity: 0, y: -40 });
     gsap.set(buttonRef.current, { opacity: 0, y: -60 });
 
-    const tl = gsap.timeline({ delay: 5 });
+    const tl = gsap.timeline({ delay: 0.5 });
     
     tl.to(logoRef.current, {
       opacity: 1,
@@ -37,20 +36,14 @@ const Navbar = () => {
       duration: 1,
       ease: "power2.out"
     }, "-=0.6");
+
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-    
-    // Animate mobile menu
-    if (!mobileMenuOpen) {
-      // Opening animation
-      gsap.fromTo(
-        mobileMenuRef.current,
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
-      );
-    }
   };
 
   return (
@@ -101,7 +94,6 @@ const Navbar = () => {
         <button 
           onClick={toggleMobileMenu}
           className="text-white bg-[#1F7580] p-2 rounded-md border border-white"
-          aria-label="Toggle mobile menu"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -111,14 +103,10 @@ const Navbar = () => {
 
       {/* Mobile Menu - Blue and White Theme */}
       {mobileMenuOpen && (
-        <div 
-          ref={mobileMenuRef}
-          className="fixed inset-0 bg-[#1F7580]/95 z-50 flex flex-col items-center justify-center md:hidden"
-        >
+        <div className="fixed inset-0 bg-[#1F7580]/95 z-50 flex flex-col items-center justify-center md:hidden">
           <button 
             onClick={toggleMobileMenu}
             className="absolute top-4 right-4 text-white bg-[#1F7580] p-2 rounded-full border-2 border-white"
-            aria-label="Close menu"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

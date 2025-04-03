@@ -16,15 +16,20 @@ const Overlay = ({ onClick }) => {
       videoRef.current.pause();
     }
     
-    // Add subtle animation for the heading
+    
     if (headingRef.current) {
-      gsap.from(headingRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 1.5,
-        ease: "power3.out",
-        delay: 0.5
-      });
+      // Make immediately visible with !important equivalent settings
+      headingRef.current.style.opacity = "1";
+      headingRef.current.style.visibility = "visible";
+      headingRef.current.style.display = "block";
+      headingRef.current.style.zIndex = "999";
+      
+      // Skip GSAP for initial setting and use direct DOM manipulation
+      setTimeout(() => {
+        if (headingRef && headingRef.current) {
+          headingRef.current.style.opacity = "1";
+        }
+      }, 100);
     }
   }, []);
 
@@ -37,18 +42,18 @@ const Overlay = ({ onClick }) => {
       videoRef.current.play();
     }
 
-    // Animate the heading to fade out and move up
+    // Animate the heading to fade out and move up - FASTER
     gsap.to(headingRef.current, {
       opacity: 0,
       y: -50,
       scale: 0.8,
-      duration: 2,
+      duration: 1, // Reduced from 2 to 1
       ease: "power2.in"
     });
 
-    // Single animation with continuous scaling and fading for the frame
+    // FASTER animation with reduced duration
     gsap.to(frameRef.current, {
-      duration: 4,
+      duration: 4, // Reduced from 4 to 2
       scale: 5,
       opacity: 0,
       ease: "power2.inOut",
@@ -75,21 +80,26 @@ const Overlay = ({ onClick }) => {
         }}
       />
 
-      {/* Responsive Heading positioned above the frame */}
-      <h1 
-        ref={headingRef}
-        className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 
-                  uppercase tracking-wider font-semibold mb-4 sm:mb-6 md:mb-8 lg:mb-10 z-30"
-        style={{ 
-          fontFamily: "'Cormorant Garamond', serif, system-ui",
-          textShadow: "0 4px 6px rgba(0, 0, 0, 0.5)"
-        }}
-      >
-        River Ranch
-      </h1>
+      {/* Overlay for better contrast */}
+      <div className="absolute inset-0 bg-black/40 z-20"></div>
 
-      {/* Frame Container - Responsive sizing */}
-      <div className="frameImg relative flex items-center justify-center w-full px-4 mt-2">
+      {/* FIXED: Moved heading to proper position ABOVE the frame */}
+      <div className="relative w-full flex flex-col items-center mb-8 z-[999]">
+        <h1 
+          ref={headingRef}
+          className="text-center text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 
+                    uppercase tracking-wider font-semibold"
+          style={{ 
+            fontFamily: "'Cormorant Garamond', serif, system-ui",
+            
+          }}
+        >
+          River Ranch
+        </h1>
+      </div>
+
+      {/* Frame Container - Now without the extra margin that was pushing it down */}
+      <div className="frameImg relative flex items-center justify-center w-full px-4">
         <img
           ref={frameRef}
           src={frameImage}
