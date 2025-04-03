@@ -38,23 +38,23 @@ const Overlay = ({ onClick }) => {
     setIsAnimating(true);
 
     if (videoRef.current) {
-      videoRef.current.playbackRate = 2;
+      videoRef.current.playbackRate = 3;
       videoRef.current.play();
     }
 
-    // Animate the heading to fade out and move up - FASTER
+    // Animate the heading to fade out and move up
     gsap.to(headingRef.current, {
       opacity: 0,
       y: -50,
       scale: 0.8,
-      duration: 1, // Reduced from 2 to 1
+      duration: 0.8,
       ease: "power2.in"
     });
 
     // FASTER animation with reduced duration
     gsap.to(frameRef.current, {
-      duration: 4, // Reduced from 4 to 2
-      scale: 5,
+      duration: 2.5,
+      scale: 6,
       opacity: 0,
       ease: "power2.inOut",
       onComplete: () => {
