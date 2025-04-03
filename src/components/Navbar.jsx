@@ -15,7 +15,7 @@ const Navbar = () => {
     gsap.set(buttonRef.current, { opacity: 0, y: -60 });
 
     // Increased delay from 1.5s to 2.5s before navbar animation starts
-    const tl = gsap.timeline({ delay: 2.5 });
+    const tl = gsap.timeline({ delay: 3 });
     
     tl.to(logoRef.current, {
       opacity: 1,

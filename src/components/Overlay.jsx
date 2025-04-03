@@ -12,16 +12,19 @@ const Overlay = ({ onClick }) => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 2.0;
-      videoRef.current.play().catch(error => {
-        console.error("Video autoplay failed:", error);
-      });
+     
+      videoRef.current.pause()
     }
   }, []);
 
   const handleClick = () => {
     if (isAnimating) return;
     setIsAnimating(true);
+
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 2.5;
+      videoRef.current.play();
+    }
     
     // Single animation with continuous scaling and fading
     gsap.to(frameRef.current, {
@@ -37,18 +40,18 @@ const Overlay = ({ onClick }) => {
   };
 
   return (
-    <div className="overlay flex items-center justify-center h-screen bg-black relative overflow-hidden">
+    <div className="overlay flex items-center justify-center h-screen  relative overflow-hidden">
       <video
         ref={videoRef}
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={backgroundVideo}
         muted
-        loop
         playsInline
-        autoPlay
+
       />
 
-      <div className="relative flex items-center justify-center">
+
+      <div className=" frameImg relative flex items-center justify-center">
         <img
           ref={frameRef}
           src={frameImage}
