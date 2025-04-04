@@ -129,7 +129,7 @@ const Navbar = () => {
               key={index}
               to={item.path}
               ref={(el) => (menuItemsRef.current[index] = el)}
-              className= " nav-item text-xl text-white hover:text-gray-300 transition-colors"
+              className="nav-item text-xl text-white hover:text-gray-300 transition-colors"
             >
               {item.label}
             </Link>
@@ -140,7 +140,7 @@ const Navbar = () => {
         <div className="hidden md:block">
           <button
             ref={buttonRef}
-            className="text-sm lg:text-base xl:text-xl bg-transparent nav-item text-white border border-white hover:bg-white hover:text-black transition-colors rounded-2xl px-4 py-1 lg:px-6 lg:py-2"
+            className="text-sm lg:text-base xl:text-xl bg-transparent nav-item text-white border border-white hover:bg-white hover:text-black transition-colors uppercase rounded-2xl px-4 py-1 lg:px-6 lg:py-2"
           >
             Book Now
           </button>
@@ -148,7 +148,7 @@ const Navbar = () => {
 
         {/* Mobile menu dropdown - also themed with white/blue */}
         {isOpen && (
-          <div className="md:hidden absolute top-full right-4 mt-2 w-48 bg-white/95 rounded-lg shadow-lg overflow-hidden z-50">
+          <div className="md:hidden  nav-item absolute top-full right-4 mt-2 w-48 bg-white/95 rounded-lg shadow-lg overflow-hidden z-50">
             <div className="flex flex-col p-4 space-y-2">
               {[
                 { label: "Home", path: "#" },

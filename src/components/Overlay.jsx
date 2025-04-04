@@ -26,9 +26,9 @@ const Overlay = ({ setShowHome }) => {
     });
 
     gsap.to(frameRef.current, {
-      duration: 2.5,
-      scale: 6,
-      opacity: 0,
+      duration: 2,
+      opacity:0,
+      scale: 9,
       ease: "power2.inOut",
       onComplete: () => {
         gsap.to(pageRef.current, {
@@ -69,6 +69,28 @@ const Overlay = ({ setShowHome }) => {
               videoRef.current.currentTime = 0.3;
             }
           }}
+        >
+          River Ranch
+        </h1>
+      </div>
+
+      {/* Frame Container - Now without the extra margin that was pushing it down */}
+      <div className="frameImg relative flex items-center justify-center w-full px-4">
+        <img
+          ref={frameRef}
+          src={frameImage}
+          alt="Frame"
+          style={{
+            width: "90%", // Mobile default
+            maxWidth: "600px", // Maximum size on larger screens
+            display: "block",
+            margin: "0 auto",
+            position: "relative",
+            zIndex: 10,
+            willChange: "transform",
+            transformOrigin: "center center",
+          }}
+          className="sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]"
         />
         <div className="w-full h-full relative flex items-center justify-center px-4">
           <img
