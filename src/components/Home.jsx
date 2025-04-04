@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // import video from "../assets/videos/video.mp4";
-import bgimg from "../assets/images/image.png";
+import bgvideo from "../assets/videos/video2.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
@@ -125,10 +125,11 @@ const Home = () => {
       <div className="h-20 z-10 absolute w-full bg-gradient-to-b from-[#1F7580] to-transparent top-0 left-0"></div>
       
       {/* Background image */}
-      <img
-        className="absolute w-full h-full object-cover"
-        src={bgimg}
-        alt="bgImage"
+      <video
+        className="absolute w-screen h-full object-cover "
+        src={bgvideo}
+        alt="video"
+        autoPlay loop muted playsInline
       />
 
       {/* Bird image - fixed display issues */}
