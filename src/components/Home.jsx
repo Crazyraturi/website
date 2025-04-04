@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // import video from "../assets/videos/video.mp4";
-import bgvideo from "../assets/videos/video.mp4";
+import bgvideo from "../assets/videos/video1.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
