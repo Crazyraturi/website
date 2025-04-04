@@ -1,24 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
-import frameImage from "/images/frame.png";
-import backgroundVideo from "/bg.mp4";
+
+// Animations gsap
+import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
-const Overlay = ({ setShowHome }) => {
+// resources
+import frameImage from "/images/frame.png";
+import backgroundVideo from "/bg.mp4";
+
+// components
+import Home from "./Home";
+
+const Overlay = ({ setIsRendered }) => {
+  // references
   const frameRef = useRef(null);
   const videoRef = useRef(null);
   const buttonRef = useRef(null);
   const pageRef = useRef(null);
 
+  // states
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleClick = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
+    if (isAnimating) return; // return if already animating
+    setIsAnimating(true); // set animating to true
 
     if (videoRef.current) {
-      videoRef.current.playbackRate = 3;
-      videoRef.current.play();
+      videoRef.current.playbackRate = 3; // set playback speed to 3x
+      videoRef.current.play(); // play the video
     }
+  };
+
+  useGSAP(() => {
+    if (!isAnimating) return; // return if not animating
 
     gsap.to(buttonRef.current, {
       duration: 1.5,
@@ -30,22 +44,21 @@ const Overlay = ({ setShowHome }) => {
       scale: 6,
       opacity: 0,
       ease: "power2.inOut",
+
       onComplete: () => {
         gsap.to(pageRef.current, {
-          delay: 0.3,
-          scaleX: 2,
-          scale: 1.5,
+          scale: 2,
           opacity: 0,
-          duration: 0.2,
+          zIndex: -1,
+          duration: 0.35,
         });
 
-        setTimeout(() => {
-          setShowHome(true);
-        }, 0.4 * 1000);
+        setIsRendered(true);
       },
     });
-  };
+  }, [isAnimating]);
 
+  // pause the video when the component is mounted
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.pause();
@@ -56,8 +69,9 @@ const Overlay = ({ setShowHome }) => {
     <>
       <div
         ref={pageRef}
-        className="overlay fixed top-0 left-0 flex flex-col items-center justify-center h-screen overflow-hidden z-10"
+        className="overlay relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden z-10"
       >
+        {/* background video  */}
         <video
           ref={videoRef}
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -70,13 +84,17 @@ const Overlay = ({ setShowHome }) => {
             }
           }}
         />
-        <div className="w-full h-full relative flex items-center justify-center px-4">
+
+        <div className="w-full h-full relative flex items-center justify-center px-4 ">
+          {/* frame  */}
           <img
             ref={frameRef}
             src={frameImage}
             alt="Frame"
             className="sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]"
           />
+
+          {/* explore button  */}
           <button
             ref={buttonRef}
             onClick={handleClick}
