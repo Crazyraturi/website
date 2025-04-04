@@ -8,55 +8,76 @@ const Navbar = () => {
   const logoRef = useRef(null);
   const menuItemsRef = useRef([]);
   const buttonRef = useRef(null);
-  const menuButtonRef = useRef(null);
 
   useEffect(() => {
     // Set initial states
     gsap.set(logoRef.current, { opacity: 0, y: -60 });
     gsap.set(menuItemsRef.current, { opacity: 0, y: -40 });
     gsap.set(buttonRef.current, { opacity: 0, y: -60 });
-    
-    // For hamburger - just set initial position off-screen from top
-    if (menuButtonRef.current) {
-      gsap.set(menuButtonRef.current, { y: -50, opacity: 1 });
-    }
-
+  
     const tl = gsap.timeline({ delay: 0.3 });
-    
+  
     // Logo animation
     tl.to(logoRef.current, {
       opacity: 1,
       y: 0,
       duration: 1.2,
-      ease: "power2.out"
-    })
+      ease: "power2.out",
+    });
+  
     // Menu items animation
-    .to(menuItemsRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: "power2.out"
-    }, "-=0.8")
+    tl.to(
+      menuItemsRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out",
+      },
+      "-=0.8"
+    );
+  
     // Button animation
-    .to(buttonRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out"
-    }, "-=0.6")
-    // SIMPLE slide from top for hamburger - no opacity animation
-    .to(menuButtonRef.current, {
-      y: 0,
-      duration: 0.5,
-      ease: "power1.out"
-    }, "-=1.2"); 
-
+    tl.to(
+      buttonRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+      },
+      "-=0.6"
+    );
+  
     return () => {
       tl.kill();
     };
   }, []);
-
+  
+  // Create a style element for the hamburger menu
+  useEffect(() => {
+    // Create a style element
+    const styleEl = document.createElement('style');
+    styleEl.innerHTML = `
+      @media (max-width: 767px) {
+        .hamburger-menu-button {
+          display: block !important;
+        }
+      }
+      @media (min-width: 768px) {
+        .hamburger-menu-button {
+          display: none !important;
+        }
+      }
+    `;
+    document.head.appendChild(styleEl);
+    
+    return () => {
+      document.head.removeChild(styleEl);
+    };
+  }, []);
+  
   return (
     <nav className="fixed top-0 left-0 w-full z-50 py-6 px-4 sm:px-6 md:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -65,37 +86,35 @@ const Navbar = () => {
           <img 
             src={logo} 
             alt="River Ranch Logo" 
-            className="h-12 sm:h-14 md:h-16 lg:h-20"
+            className="h-16 sm:h-15 md:h-18 lg:h-25"
             style={{ maxWidth: "none" }}
           />
         </div>
 
-        {/* WHITE & BLUE Hamburger menu with simplified slide animation */}
-        <div 
-          ref={menuButtonRef} 
-          className="block md:hidden relative z-50"
+        {/* Standalone Hamburger Menu with global CSS class */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="hamburger-menu-button p-2 rounded-md bg-white focus:outline-none"
+          style={{
+            boxShadow: "0 0 10px rgba(255,255,255,0.5)",
+            position: 'relative',
+            zIndex: 9999,
+            display: 'block' // Default visible, CSS will override as needed
+          }}
+          aria-label="Toggle menu"
         >
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-md bg-white focus:outline-none"
-            style={{
-              boxShadow: "0 0 10px rgba(255,255,255,0.5)",
-            }}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              // Close icon - blue
-              <svg className="w-8 h-8" fill="none" stroke="#1F7580" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              // Hamburger icon - blue
-              <svg className="w-8 h-8" fill="none" stroke="#1F7580" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
+          {isOpen ? (
+            // Close icon - blue
+            <svg className="w-8 h-8" fill="none" stroke="#1F7580" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            // Hamburger icon - blue
+            <svg className="w-8 h-8" fill="none" stroke="#1F7580" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
 
         {/* Desktop menu */}
         <div className="hidden md:flex space-x-8">
@@ -110,7 +129,7 @@ const Navbar = () => {
               key={index}
               to={item.path}
               ref={(el) => (menuItemsRef.current[index] = el)}
-              className="text-white hover:text-gray-200 transition-colors"
+              className= " nav-item text-xl text-white hover:text-gray-300 transition-colors"
             >
               {item.label}
             </Link>
@@ -141,7 +160,7 @@ const Navbar = () => {
                 <Link
                   key={index}
                   to={item.path}
-                  className="text-[#1F7580] text-lg font-semibold tracking-wider hover:bg-[#1F7580] hover:text-white px-4 py-2 rounded-md transition-colors"
+                  className="text-[#1F7580] nav-item text-lg font-semibold tracking-wider hover:bg-[#1F7580] hover:text-white px-1 py-2 rounded-md transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}

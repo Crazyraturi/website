@@ -40,6 +40,8 @@ const Home = () => {
         opacity: 0,
         display: 'block'
       });
+
+      
     }
 
     const tl = gsap.timeline({ delay: 0.5 });
@@ -142,16 +144,16 @@ const Home = () => {
         alt="flying birds"
       />
 
-      {/* Enhanced Overlay for Better Text Visibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40 z-0"></div>
+      {/* Enhanced Overlay for Better Text Visibility - hidden on mobile */}
+      <div className="absolute inset-0 hidden sm:block bg-gradient-to-b from-black/40 via-black/20 to-black/40 z-0"></div>
 
       {/* Container for headings with additional visibility enhancement */}
       <div 
         ref={headingsContainerRef}
         className="absolute inset-0 flex flex-col uppercase justify-center z-10 px-4"
       >
-        {/* Background element for headings - centered on mobile, left-aligned on larger screens */}
-        <div className="absolute left-0 right-0 sm:right-auto max-w-[100%] sm:max-w-[80%] md:max-w-[70%] h-[260px] sm:h-[320px] md:h-[400px] lg:h-[500px] 
+        {/* Background element for headings - hidden on mobile */}
+        <div className="absolute hidden sm:block left-0 right-0 sm:right-auto max-w-[100%] sm:max-w-[80%] md:max-w-[70%] h-[260px] sm:h-[320px] md:h-[400px] lg:h-[500px] 
                        bg-gradient-to-r from-black/50 to-transparent sm:rounded-r-3xl rounded-none z-[-1]">
         </div>
         
