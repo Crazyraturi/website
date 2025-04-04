@@ -54,7 +54,8 @@ const Overlay = ({ onClick }) => {
     // FASTER animation with reduced duration
     gsap.to(frameRef.current, {
       duration: 2,
-      scale: 5,
+      opacity:0,
+      scale: 9,
       ease: "power2.inOut",
       onComplete: () => {
         if (onClick) onClick();
@@ -105,7 +106,7 @@ const Overlay = ({ onClick }) => {
           alt="Frame"
           style={{
             width: "90%", // Mobile default
-            maxWidth: "650px", // Maximum size on larger screens
+            maxWidth: "600px", // Maximum size on larger screens
             display: "block",
             margin: "0 auto",
             position: "relative",
