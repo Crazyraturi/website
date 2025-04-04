@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 // import video from "../assets/videos/video.mp4";
-import bgvideo from "../assets/videos/video2.mp4";
+import bgvideo from "../assets/videos/video.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
@@ -145,8 +145,7 @@ const Home = () => {
         alt="flying birds"
       />
 
-      {/* Enhanced Overlay for Better Text Visibility - hidden on mobile */}
-      <div className="absolute inset-0 hidden sm:block bg-gradient-to-b from-black/40 via-black/20 to-black/40 z-0"></div>
+      
 
       {/* Container for headings with additional visibility enhancement */}
       <div 
