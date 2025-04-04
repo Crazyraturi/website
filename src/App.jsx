@@ -1,17 +1,22 @@
-import React, { useState } from "react";
-import "./App.css";
-import Overlay from "./components/Overlay";
-import Home from "./components/Home";
+import React from 'react';
+import { Routes, Route } from 'react-router';
+import Overlay from './components/Overlay';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import './App.css';
 
 function App() {
-  const [showHome, setShowHome] = useState(false);
-
-  console.log(showHome);
   return (
-    <>
-      <Overlay setShowHome={setShowHome} />
-      {showHome && <Home />}
-    </>
+    <Routes>
+      <Route path="/" element={<Overlay />} />
+      <Route path="/home" element={
+        <>
+          <Navbar />
+          <Home />
+        </>
+      } />
+      {/* Additional routes */}
+    </Routes>
   );
 }
 
