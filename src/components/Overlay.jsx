@@ -53,9 +53,8 @@ const Overlay = ({ onClick }) => {
 
     // FASTER animation with reduced duration
     gsap.to(frameRef.current, {
-      duration: 2.5,
-      scale: 6,
-      opacity: 0,
+      duration: 2,
+      scale: 5,
       ease: "power2.inOut",
       onComplete: () => {
         if (onClick) onClick();
@@ -80,11 +79,11 @@ const Overlay = ({ onClick }) => {
         }}
       />
 
-      {/* Overlay for better contrast */}
-      <div className="absolute inset-0 bg-black/40 z-20"></div>
+     
+     
 
       {/* FIXED: Moved heading to proper position ABOVE the frame */}
-      <div className="relative w-full flex flex-col items-center mb-8 z-[999]">
+      <div className="relative w-full flex flex-col items-center mt-37 z-[999]">
         <h1 
           ref={headingRef}
           className="text-center text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 
