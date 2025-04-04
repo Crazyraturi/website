@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 
+
 nav-item{
   font-family: "Poppins", sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   
 
 }
 
 .hero-heading{
   font-family: "Cormorant Garamond", serif;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 
