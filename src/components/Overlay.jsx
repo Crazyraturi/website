@@ -32,30 +32,24 @@ const Overlay = ({ setIsRendered }) => {
   };
 
   useGSAP(() => {
-    if (!isAnimating) return; // return if not animating
+    if (!isAnimating) return;
 
-    gsap.to(buttonRef.current, {
-      duration: 1.5,
-      opacity: 0,
-    });
+    const tl = gsap.timeline();
 
-    gsap.to(frameRef.current, {
-      duration: 2.5,
-      scale: 6,
-      opacity: 0,
-      ease: "power2.inOut",
+    tl.to(buttonRef.current, { opacity: 0, duration: 1.5 }, 0)
+      .to(frameRef.current, { scale: 6, opacity: 0, duration: 2.5 }, 0)
+      .to(pageRef.current, {
+        scale: 2,
+        opacity: 0,
+        zIndex: -1,
+        duration: 0.35,
+        onStart: () => {
+          setIsRendered(true);
+        },
+      });
 
-      onComplete: () => {
-        gsap.to(pageRef.current, {
-          scale: 2,
-          opacity: 0,
-          zIndex: -1,
-          duration: 0.35,
-        });
-
-        setIsRendered(true);
-      },
-    });
+    // Explanation:
+    //  - `0` = start all animations at the same time
   }, [isAnimating]);
 
   // pause the video when the component is mounted
