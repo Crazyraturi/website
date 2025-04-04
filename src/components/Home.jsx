@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
-// import video from "../assets/videos/video.mp4";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import bgvideo from "../assets/videos/video1.mp4";
 import { RiCalendarCheckLine } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaUnlock } from "react-icons/fa6";
-import { gsap } from "gsap";
 
-const Home = () => {
+const Home = ({ isRendered, onRenderComplete }) => {
+  const pageRef = useRef(null);
   const headingRef1 = useRef(null);
   const headingRef2 = useRef(null);
   const headingRef3 = useRef(null);
@@ -14,6 +15,22 @@ const Home = () => {
   const bookButtonRef = useRef(null);
   const bookingSectionRef = useRef(null);
   const birdRef = useRef(null);
+  
+  // animate the zoom in effect
+  useGSAP(() => {
+    if (!pageRef.current || !isRendered) return;
+    gsap.fromTo(
+      pageRef.current,
+      { opacity: 0, scale: 2 },
+      {
+        opacity: 1,
+        scale: 1,
+        zIndex: 20,
+        duration: 0.35,
+        onComplete: onRenderComplete,
+      }
+    );
+  }, [pageRef.current, isRendered]);
 
   useEffect(() => {
     // Set initial states
@@ -121,7 +138,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="h-screen w-full relative">
+      <div
+        ref={pageRef}
+        className="home fixed top-0 left-0 w-screen  h-screen  z-0"
+      >
+      {/* top gradient */}
       <div className="h-20 z-10 absolute w-full bg-gradient-to-b from-[#1F7580] to-transparent top-0 left-0"></div>
       
       {/* Background image */}
@@ -131,8 +152,6 @@ const Home = () => {
         alt="video"
         autoPlay loop muted playsInline
       />
-
-    
 
       {/* Bird image - fixed display issues */}
       <img
@@ -146,10 +165,7 @@ const Home = () => {
         src="https://i.gifer.com/2vDc.gif"
         alt="flying birds"
       />
-
-      
-
-      {/* Container for headings with additional visibility enhancement */}
+          {/* Container for headings with additional visibility enhancement */}
       <div 
         ref={headingsContainerRef}
         className="absolute inset-0 flex flex-col uppercase justify-center z-10 px-4"
@@ -159,15 +175,14 @@ const Home = () => {
                        bg-gradient-to-r from-black/50 to-transparent sm:rounded-r-3xl rounded-none z-[-1]">
         </div>
         
+
         <h3
-          ref={headingRef1}
           className="text-center sm:text-left sm:pl-[15%] md:pl-[20%] lg:pl-[25%] hero-heading tracking-wide text-sm sm:text-base md:text-lg lg:text-xl 
                     text-white font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
         >
           Welcome to River Ranch
         </h3>
         <h1
-          ref={headingRef2}
           className="text-center sm:text-left sm:pl-[15%] md:pl-[20%] lg:pl-[25%] hero-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 
                     text-white font-bold drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
           style={{ textShadow: "0 4px 8px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.3)" }}
@@ -175,7 +190,6 @@ const Home = () => {
           Treasure
         </h1>
         <h1
-          ref={headingRef3}
           className="text-center sm:text-left sm:pl-[25%] md:pl-[30%] lg:pl-[40%] hero-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 
                     text-white font-bold drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
           style={{ textShadow: "0 4px 8px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.3)" }}
@@ -195,10 +209,7 @@ const Home = () => {
         </div> */}
       </div>
 
-      <div
-        ref={bookingSectionRef}
-        className="absolute inset-0 flex items-end justify-center pb-6 sm:pb-10 md:pb-16 lg:pb-20 z-10"
-      >
+      <div className="absolute inset-0 flex items-end justify-center pb-6 sm:pb-10 md:pb-16 lg:pb-20 z-10">
         {/* For larger screens - horizontal layout */}
         <div className="hidden md:flex gap-4 items-center lg:gap-8 xl:gap-16 p-4 sm:p-6 rounded-lg">
           <div>

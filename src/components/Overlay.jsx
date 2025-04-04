@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react"; 
 import { useNavigate } from "react-router";
+import Home from "./Home";
 import frameImage from "../assets/images/frame.png";
 import backgroundVideo from "../assets/videos/bg.mp4";
+import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
-const Overlay = ({ onClick }) => {
+const Overlay = ({ setIsRendered }) => {
+  const buttonRef = useRef(null);
+  const pageRef = useRef(null);
   const navigate = useNavigate();
   const frameRef = useRef(null);
   const videoRef = useRef(null);
@@ -34,13 +38,62 @@ const Overlay = ({ onClick }) => {
   }, []);
 
   const handleClick = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
+    if (isAnimating) return; // return if already animating
+    setIsAnimating(true); // set animating to true
 
     if (videoRef.current) {
-      videoRef.current.playbackRate = 3;
-      videoRef.current.play();
+      videoRef.current.playbackRate = 3; // set playback speed to 3x
+      videoRef.current.play(); // play the video
     }
+// <<<<<<< pushkardeep
+//   };
+
+//   useGSAP(() => {
+//     if (!isAnimating) return;
+
+//     const tl = gsap.timeline();
+
+//     tl.to(buttonRef.current, { opacity: 0, duration: 1.5 }, 0)
+//       .to(frameRef.current, { scale: 6, opacity: 0, duration: 2.5 }, 0)
+//       .to(pageRef.current, {
+//         scale: 2,
+//         opacity: 0,
+//         zIndex: -1,
+//         duration: 0.35,
+//         onStart: () => {
+//           setIsRendered(true);
+//         },
+//       });
+
+//     // Explanation:
+//     //  - `0` = start all animations at the same time
+//   }, [isAnimating]);
+
+//   // pause the video when the component is mounted
+//   useEffect(() => {
+//     if (videoRef.current) {
+//       videoRef.current.pause();
+//     }
+//   }, []);
+
+//   return (
+//     <>
+//       <div
+//         ref={pageRef}
+//         className="overlay relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden z-10"
+//       >
+//         {/* background video  */}
+//         <video
+//           ref={videoRef}
+//           className="absolute top-0 left-0 w-full h-full object-cover"
+//           src={backgroundVideo}
+//           muted
+//           playsInline
+//           onLoadedMetadata={() => {
+//             if (videoRef.current) {
+//               videoRef.current.currentTime = 0.3;
+//             }
+// =======
 
     // Animate the heading to fade out and move up
     gsap.to(headingRef.current, {
@@ -92,32 +145,46 @@ const Overlay = ({ onClick }) => {
           style={{ 
             fontFamily: "'Cormorant Garamond', serif, system-ui",
             
-          }}
-        >
-          River Ranch
-        </h1>
-      </div>
+// >>>>>>> main
+//           }}
+//         >
+//           River Ranch
+//         </h1>
+//       </div>
 
-      {/* Frame Container - Now without the extra margin that was pushing it down */}
-      <div className="frameImg relative flex items-center justify-center w-full px-4">
-        <img
-          ref={frameRef}
-          src={frameImage}
-          alt="Frame"
-          style={{
-            width: "90%", // Mobile default
-            maxWidth: "600px", // Maximum size on larger screens
-            display: "block",
-            margin: "0 auto",
-            position: "relative",
-            zIndex: 10,
-            willChange: "transform",
-            transformOrigin: "center center",
-          }}
-          className="sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]"
-        />
+//       {/* Frame Container - Now without the extra margin that was pushing it down */}
+//       <div className="frameImg relative flex items-center justify-center w-full px-4">
+//         <img
+//           ref={frameRef}
+//           src={frameImage}
+//           alt="Frame"
+//           style={{
+//             width: "90%", // Mobile default
+//             maxWidth: "600px", // Maximum size on larger screens
+//             display: "block",
+//             margin: "0 auto",
+//             position: "relative",
+//             zIndex: 10,
+//             willChange: "transform",
+//             transformOrigin: "center center",
+//           }}
+//           className="sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]"
+//         />
 
-        {!isAnimating && (
+// <<<<<<< pushkardeep
+//         <div className="w-full h-full relative flex items-center justify-center px-4 ">
+//           {/* frame  */}
+//           <img
+//             ref={frameRef}
+//             src={frameImage}
+//             alt="Frame"
+//             className="sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]"
+//           />
+
+//           {/* explore button  */}
+// =======
+//         {!isAnimating && (
+// >>>>>>> main
           <button
             className="absolute left-1/2 top-1/2 transform uppercase -translate-x-1/2 -translate-y-1/2 
                       bg-[#988579] text-white px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 
