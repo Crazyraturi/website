@@ -27,7 +27,8 @@ const Overlay = ({ setShowHome }) => {
 
     gsap.to(frameRef.current, {
       duration: 2,
-      scale: 5,
+      opacity:0,
+      scale: 9,
       ease: "power2.inOut",
       onComplete: () => {
         gsap.to(pageRef.current, {
