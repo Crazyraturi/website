@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 // animations gsap
 import { useGSAP } from "@gsap/react";
@@ -31,24 +31,78 @@ const Home = ({ isRendered, onRenderComplete }) => {
     );
   }, [pageRef.current, isRendered]);
 
+  const videoRef_1 = useRef(null);
+  const videoRef_2 = useRef(null);
+
+  const [vidIndex, setVidIndex] = useState(0);
+
+  const fadeToNextVideo = (currentRef, nextRef, nextIndex) => {
+    gsap.to(currentRef.current, {
+      opacity: 0,
+      duration: 1.5,
+      onComplete: () => {
+        gsap.set(currentRef.current, {
+          opacity: 1,
+          zIndex: 0,
+        });
+      },
+    });
+
+    gsap.to(nextRef.current, {
+      opacity: 1,
+      duration: 1.5,
+      onComplete: () => {
+        gsap.set(nextRef.current, {
+          zIndex: 1,
+        });
+      },
+    });
+
+    setVidIndex(nextIndex);
+    nextRef.current.play();
+  };
+
+  const handleVideo1End = () => {
+    fadeToNextVideo(videoRef_1, videoRef_2, 1);
+  };
+
+  const handleVideo2End = () => {
+    fadeToNextVideo(videoRef_2, videoRef_1, 0);
+  };
+
   return (
     <div
       ref={pageRef}
       className="home fixed top-0 left-0 w-screen  h-screen  z-0"
     >
       {/* top gradient */}
-      <div className="h-20 z-10 absolute w-full bg-gradient-to-b from-[#1F7580] to-transparent top-0 left-0"></div>
+      {/* <div className="h-20 z-10 absolute w-full bg-gradient-to-b from-[#1F7580] to-transparent top-0 left-0"></div> */}
 
       {/* Background video */}
-      <video
-        className="absolute w-screen h-full object-cover "
-        src={bgvideo}
-        alt="video"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+
+      <div className="w-full h-full relative">
+        <video
+          ref={videoRef_1}
+          className="absolute w-screen h-full object-cover z-10"
+          src={bgvideo}
+          alt="video"
+          muted
+          playsInline
+          onCanPlay={() => vidIndex == 0 && videoRef_1.current.play()}
+          onEnded={handleVideo1End}
+        />
+
+        <video
+          ref={videoRef_2}
+          className="absolute w-screen h-full object-cover z-0"
+          src={bgvideo}
+          alt="video"
+          muted
+          playsInline
+          onCanPlay={() => vidIndex == 1 && videoRef_2.current.play()}
+          onEnded={handleVideo2End}
+        />
+      </div>
 
       <div className="absolute inset-0 flex flex-col uppercase justify-center z-10 px-4">
         <div

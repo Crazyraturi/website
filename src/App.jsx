@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="App w-screen h-screen relative overflow-hidden">
-      {!hideOverlay && <Overlay setIsRendered={setIsRendered} />}
+      {/* {!hideOverlay && <Overlay setIsRendered={setIsRendered} />} */}
       <Home isRendered={isRendered} onRenderComplete={handleRenderComplete} />
     </div>
   );
